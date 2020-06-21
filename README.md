@@ -7,3 +7,8 @@
 - [ ] Tomcat 7
 - [ ] Tomcat 8
 - [ ] Tomcat 9
+- [ ] Weblogic10.3.6
+- [ ] weblogic12.1.3
+- [ ] Resin
+- [ ] Jetty
+- [ ] 写文件回显
