@@ -1,0 +1,197 @@
+#############################################################
+   Java Object Searcher v0.01
+   author: c0ny1<root@gv7.me>
+   github: http://github.com/c0ny1/java-object-searcher
+#############################################################
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+        ---> handler = {org.apache.coyote.AbstractProtocol$ConnectionHandler} 
+         ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+        ---> handler = {org.apache.coyote.AbstractProtocol$ConnectionHandler} 
+         ---> global = {org.apache.coyote.RequestGroupInfo} 
+          ---> processors = {java.util.List<org.apache.coyote.RequestInfo>} 
+           ---> [0] = {org.apache.coyote.RequestInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> applicationRequest = {org.apache.catalina.connector.RequestFacade}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.parameter_parse_failed_reason] = {org.apache.catalina.connector.Request$6}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.core.DISPATCHER_TYPE] = {org.apache.catalina.connector.Request$1}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.ASYNC_SUPPORTED] = {org.apache.catalina.connector.Request$3}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.tomcat.sendfile.support] = {org.apache.catalina.connector.Request$7}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.parameter_parse_failed] = {org.apache.catalina.connector.Request$5}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.core.DISPATCHER_REQUEST_PATH] = {org.apache.catalina.connector.Request$2}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [16] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.NioEndpoint$Poller} 
+      ---> this$0 = {org.apache.tomcat.util.net.NioEndpoint} 
+       ---> connections = {java.util.Map<U, org.apache.tomcat.util.net.SocketWrapperBase<S>>} 
+        ---> [java.nio.channels.SocketChannel[connected local=/127.0.0.1:8080 remote=/127.0.0.1:14559]] = {org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper} 
+         ---> currentProcessor = {org.apache.coyote.http11.Http11Processor} 
+           ---> request = {org.apache.coyote.Request} 
+            ---> notes = {class [Ljava.lang.Object;} 
+             ---> [1] = {org.apache.catalina.connector.Request} 
+                ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                 ---> [org.apache.catalina.realm.GSS_CREDENTIAL] = {org.apache.catalina.connector.Request$4}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> contextClassLoader = {org.apache.catalina.loader.ParallelWebappClassLoader} 
+    ---> resources = {org.apache.catalina.webresources.StandardRoot} 
+        ---> mserver = {com.sun.jmx.mbeanserver.JmxMBeanServer} 
+         ---> mbsInterceptor = {com.sun.jmx.interceptor.DefaultMBeanServerInterceptor} 
+          ---> repository = {com.sun.jmx.mbeanserver.Repository} 
+           ---> domainTb = {java.util.Map<java.lang.String, java.util.Map<java.lang.String, com.sun.jmx.mbeanserver.NamedObject>>} 
+            ---> [Catalina] = {java.util.HashMap} 
+              ---> [Catalina] = {com.sun.jmx.mbeanserver.NamedObject} 
+               ---> object = {org.apache.tomcat.util.modeler.BaseModelMBean} 
+                ---> resource = {org.apache.catalina.valves.AccessLogValve} 
+                 ---> logElements = {class [Lorg.apache.catalina.valves.AbstractAccessLogValve$AccessLogElement;} 
+                  ---> [9] = {org.apache.catalina.valves.AbstractAccessLogValve$RequestElement}
+
+

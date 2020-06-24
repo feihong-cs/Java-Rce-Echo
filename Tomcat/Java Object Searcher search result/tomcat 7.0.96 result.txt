@@ -1,0 +1,209 @@
+#############################################################
+   Java Object Searcher v0.01
+   author: c0ny1<root@gv7.me>
+   github: http://github.com/c0ny1/java-object-searcher
+#############################################################
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [27] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Acceptor} 
+      ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+       ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+        ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [39] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+          ---> handler = {org.apache.coyote.ajp.AjpAprProtocol$AjpConnectionHandler} 
+           ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [2] = {java.lang.Thread} 
+     ---> target = {org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor} 
+      ---> this$0 = {org.apache.catalina.core.StandardEngine} 
+       ---> children = {java.util.HashMap<java.lang.String, org.apache.catalina.Container>} 
+        ---> [localhost] = {org.apache.catalina.core.StandardHost} 
+             ---> pipeline = {org.apache.catalina.core.StandardPipeline} 
+              ---> first = {org.apache.catalina.valves.AccessLogValve} 
+               ---> logElements = {class [Lorg.apache.catalina.valves.AccessLogValve$AccessLogElement;} 
+                ---> [9] = {org.apache.catalina.valves.AccessLogValve$RequestElement}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> facade = {org.apache.catalina.connector.RequestFacade}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.parameter_parse_failed_reason] = {org.apache.catalina.connector.Request$6}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.core.DISPATCHER_TYPE] = {org.apache.catalina.connector.Request$1}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.ASYNC_SUPPORTED] = {org.apache.catalina.connector.Request$3}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.parameter_parse_failed] = {org.apache.catalina.connector.Request$5}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.core.DISPATCHER_REQUEST_PATH] = {org.apache.catalina.connector.Request$2}
+
+
+TargetObject = {org.apache.tomcat.util.threads.TaskThread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [13] = {java.lang.Thread} 
+     ---> target = {org.apache.tomcat.util.net.AprEndpoint$Poller} 
+         ---> this$0 = {org.apache.tomcat.util.net.AprEndpoint} 
+           ---> handler = {org.apache.coyote.http11.Http11AprProtocol$Http11ConnectionHandler} 
+            ---> global = {org.apache.coyote.RequestGroupInfo} 
+             ---> processors = {java.util.ArrayList<org.apache.coyote.RequestInfo>} 
+              ---> [0] = {org.apache.coyote.RequestInfo} 
+               ---> req = {org.apache.coyote.Request} 
+                ---> notes = {class [Ljava.lang.Object;} 
+                 ---> [1] = {org.apache.catalina.connector.Request} 
+                   ---> specialAttributes = {java.util.Map<java.lang.String, org.apache.catalina.connector.Request$SpecialAttributeAdapter>} 
+                    ---> [org.apache.catalina.realm.GSS_CREDENTIAL] = {org.apache.catalina.connector.Request$4}
+
+

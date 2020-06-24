@@ -1,0 +1,78 @@
+#############################################################
+   Java Object Searcher v0.01
+   author: c0ny1<root@gv7.me>
+   github: http://github.com/c0ny1/java-object-searcher
+#############################################################
+
+
+TargetObject = {java.lang.Thread} 
+  ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Worker} 
+   ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+    ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+     ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Worker} 
+   ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+    ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+     ---> global = {org.apache.coyote.RequestGroupInfo} 
+      ---> processors = {class java.util.ArrayList} 
+       ---> [0] = {org.apache.coyote.RequestInfo}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Worker} 
+   ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+    ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+     ---> global = {org.apache.coyote.RequestGroupInfo} 
+      ---> processors = {class java.util.ArrayList} 
+       ---> [0] = {org.apache.coyote.RequestInfo} 
+        ---> req = {org.apache.coyote.Request}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [6] = {org.apache.tomcat.util.threads.ThreadWithAttributes} 
+      ---> target = {org.apache.tomcat.util.threads.ThreadPool$ControlRunnable} 
+       ---> toRun = {org.apache.jk.common.ChannelSocket$SocketAcceptor} 
+        ---> wajp = {org.apache.jk.common.ChannelSocket} 
+         ---> global = {org.apache.coyote.RequestGroupInfo}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> group = {java.lang.ThreadGroup} 
+   ---> threads = {class [Ljava.lang.Thread;} 
+    ---> [6] = {org.apache.tomcat.util.threads.ThreadWithAttributes} 
+      ---> target = {org.apache.tomcat.util.threads.ThreadPool$ControlRunnable} 
+       ---> toRun = {org.apache.jk.common.ChannelSocket$SocketAcceptor} 
+        ---> wajp = {org.apache.jk.common.ChannelSocket} 
+          ---> next = {org.apache.jk.common.HandlerRequest}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Worker} 
+   ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+    ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+     ---> global = {org.apache.coyote.RequestGroupInfo} 
+      ---> processors = {class java.util.ArrayList} 
+       ---> [0] = {org.apache.coyote.RequestInfo} 
+        ---> req = {org.apache.coyote.Request} 
+         ---> notes = {class [Ljava.lang.Object;} 
+          ---> [1] = {org.apache.catalina.connector.Request}
+
+
+TargetObject = {java.lang.Thread} 
+  ---> target = {org.apache.tomcat.util.net.JIoEndpoint$Worker} 
+   ---> this$0 = {org.apache.tomcat.util.net.JIoEndpoint} 
+    ---> handler = {org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler} 
+     ---> global = {org.apache.coyote.RequestGroupInfo} 
+      ---> processors = {class java.util.ArrayList} 
+       ---> [0] = {org.apache.coyote.RequestInfo} 
+        ---> req = {org.apache.coyote.Request} 
+         ---> notes = {class [Ljava.lang.Object;} 
+          ---> [1] = {org.apache.catalina.connector.Request} 
+            ---> facade = {org.apache.catalina.connector.RequestFacade}
+
+
