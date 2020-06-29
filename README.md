@@ -10,6 +10,6 @@
 - [x] Tomcat 9 (Tested on 9.0.16/9.0.33)
 - [ ] Weblogic10.3.6
 - [ ] weblogic12.1.3
-- [ ] Resin 
+- [x] Resin (Tested on pro-4.0.64, pro-4.0.57, pro-4.0.45, pro-4.0.32, failed on pro-3.1.15)
 - [x] Jetty (Tested on 9.4.30.v20200611, 9.3.28.v20191105, 9.2.29.v20191105, 9.0.7.v20131107, 8.1.21.v20160908, 7.6.21.v20160908)
 - [ ] 写文件回显
