@@ -24,7 +24,7 @@
 ![Resin](https://github.com/feihong-cs/deserizationEcho/blob/master/Windows/img/Resin.png)
 
 ## 参考
-[win描述符下成功又失败的回显](https://xz.aliyun.com/t/7566)  
-[Socket 和 SocketChannel 的 FileDescriptor](https://blog.csdn.net/zxcc1314/article/details/99986252)  
-[https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/ServerSocketChannelImpl.c](https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/ServerSocketChannelImpl.c)  
-[https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/SocketDispatcher.c](https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/SocketDispatcher.c)  
+* [win描述符下成功又失败的回显](https://xz.aliyun.com/t/7566)  
+* [Socket 和 SocketChannel 的 FileDescriptor](https://blog.csdn.net/zxcc1314/article/details/99986252)  
+* [https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/ServerSocketChannelImpl.c](https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/ServerSocketChannelImpl.c)  
+* [https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/SocketDispatcher.c](https://github.com/JetBrains/jdk8u_jdk/blob/master/src/windows/native/sun/nio/ch/SocketDispatcher.c)  
