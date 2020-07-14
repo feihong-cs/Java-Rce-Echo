@@ -2,17 +2,8 @@
 <%
     String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
     path = path.substring(0, path.indexOf("WEB-INF"));
-
-    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec("echo \"It works!\"").getInputStream()));
-    StringBuilder sb = new StringBuilder();
-    String line;
-    while((line = br.readLine()) != null){
-        sb.append(line + "\n");
-    }
-
-
+    String res = new java.util.Scanner(Runtime.getRuntime().exec("echo \"It works!\"").getInputStream()).useDelimiter("\\A").next();
     java.io.PrintWriter printWriter = new java.io.PrintWriter(path + "echo.js");
-    printWriter.println(sb.toString());
+    printWriter.println(res);
     printWriter.close();
-    br.close();
 %>

