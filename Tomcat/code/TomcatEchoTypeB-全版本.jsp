@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+
+//        参考：
+//        《tomcat不出网回显连续剧第六集》    https://xz.aliyun.com/t/7535
+
     boolean flag = false;
 
     javax.management.MBeanServer mbeanServer = org.apache.tomcat.util.modeler.Registry.getRegistry((Object)null, (Object)null).getMBeanServer();
