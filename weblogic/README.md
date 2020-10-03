@@ -1,4 +1,4 @@
-# Weblogic 反序列化回显
+# Weblogic 回显
 
 ## 说明
   代码直接搬运了 ```lufei``` 师傅的代码
